@@ -17,6 +17,7 @@ export default new Event("interactionCreate", async (interaction) => {
                 interaction: interaction as ExtendedInteraction
             });
         } catch (err) {
+            console.log(err);
             return interaction.reply({
                 embeds: [
                     new EmbedBuilder()
@@ -24,7 +25,7 @@ export default new Event("interactionCreate", async (interaction) => {
                     .setDescription(`${err}`)
                     .setColor('Red')
                 ]
-            })
+            });
         }
     }
 });
