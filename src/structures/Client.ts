@@ -2,7 +2,8 @@ import {
     ApplicationCommandDataResolvable,
     Client,
     ClientEvents,
-    Collection
+    Collection,
+    IntentsBitField
 } from "discord.js";
 import { CommandType, ExtendedInteraction } from "../typings/Command";
 import { promisify } from "util";
@@ -17,7 +18,20 @@ export class ExtendedClient extends Client {
     commands: Collection<string, CommandType> = new Collection();
 
     constructor() {
-        super({ intents: 32767 });
+        super({ intents: [
+            IntentsBitField.Flags.AutoModerationConfiguration,
+            IntentsBitField.Flags.AutoModerationExecution,
+            IntentsBitField.Flags.GuildEmojisAndStickers,
+            IntentsBitField.Flags.GuildInvites,
+            IntentsBitField.Flags.GuildMembers,
+            IntentsBitField.Flags.GuildModeration,
+            IntentsBitField.Flags.GuildMessageReactions,
+            IntentsBitField.Flags.GuildMessages,
+            IntentsBitField.Flags.MessageContent,
+            IntentsBitField.Flags.GuildPresences,
+            IntentsBitField.Flags.GuildVoiceStates,
+            IntentsBitField.Flags.Guilds
+        ] });
     }
 
     start() {
