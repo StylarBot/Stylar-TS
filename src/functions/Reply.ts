@@ -1,7 +1,7 @@
 import { EmbedBuilder } from "discord.js";
 import { ExtendedInteraction } from "../typings/Command";
 
-export default async function Reply(interaction: ExtendedInteraction, message: string, emoji: string, ephemeral: boolean) {
+export default async function Reply(interaction, message: string, emoji: string, ephemeral: boolean) {
     switch(ephemeral) {
         case true: {
             return interaction.reply({
