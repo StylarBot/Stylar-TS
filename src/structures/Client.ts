@@ -9,6 +9,7 @@ import { promisify } from "util";
 import { RegisterCommandsOptions } from "../typings/client";
 import { Event } from "./Event";
 import glob from 'glob';
+import log from "../functions/logger";
 
 const globPromise = promisify(glob);
 
@@ -43,10 +44,10 @@ export class ExtendedClient extends Client {
     async registerCommands({ commands, guildId }: RegisterCommandsOptions) {
         if (guildId) {
             this.guilds.cache.get(guildId)?.commands.set(commands);
-            console.log(`Registering commands to ${guildId}!`);
+            log(`Registering commands to ${guildId}`, false);
         } else {
             this.application?.commands.set(commands);
-            console.log(`Registering global commands!`);
+            log(`Registering global commands`, false);
         }
     }
 

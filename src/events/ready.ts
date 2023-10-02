@@ -1,5 +1,6 @@
 import { Event } from "../structures/Event";
+import log from "../functions/logger";
 
 export default new Event("ready", async (client) => {
-    console.log(`${client.user.tag} is online!`);
+    return log(`${client.user.tag} logged in!`, false);
 });
