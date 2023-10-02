@@ -1,38 +1,43 @@
 {
-    "name": "stylarbot",
-    "version": "1.0.0",
-    "description": "A surprisingly incredible multi-purpose open-source bot.",
-    "main": "src/index.js",
-    "scripts": {
-      "test": "nodemon ."
-    },
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/StylarBot/bot.git"
-    },
-    "keywords": [
-      "discordbot",
-      "bot",
-      "commands",
-      "slashcommands",
-      "utility",
-      "moderationbot",
-      "funbot"
-    ],
-    "author": "benjisqt",
-    "license": "MIT",
-    "bugs": {
-      "url": "https://github.com/StylarBot/bot/issues"
-    },
-    "homepage": "https://github.com/StylarBot/bot#readme",
-    "dependencies": {
-      "axios": "^1.5.0",
-      "chalk": "^4.0.0",
-      "discord.js": "^14.13.0",
-      "dotenv": "^16.3.1",
-      "fs": "^0.0.1-security",
-      "mongoose": "^7.5.2",
-      "ms": "^2.1.3",
-      "node-fetch": "^2.6.7"
-    }
-  }
+  "name": "vexts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "start:dev": "ts-node-dev src/index.ts",
+    "start:prod": "node dist/index.js",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "nodemon": "nodemon src/index.ts"
+  },
+  "keywords": [],
+  "author": "benjis#5249",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.5.1",
+    "chalk": "^4.1.2",
+    "discord.js": "^14.11.0",
+    "dotenv": "^16.1.3",
+    "glob": "^7.2.3",
+    "mongoose": "^7.2.2",
+    "node-fetch": "^2.6.7",
+    "reciple": "^7.7.4",
+    "reddit-fetch": "^1.5.1"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/node": "^20.2.5",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.1.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjisqt/vexts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/benjisqt/vexts/issues"
+  },
+  "homepage": "https://github.com/benjisqt/vexts#readme",
+  "description": ""
+}

@@ -1,8 +1,9 @@
-import dotenv from 'dotenv';
-import StylarClient from './utils/StylarClient';
+console.clear();
+require("dotenv").config();
+import { ExtendedClient } from "./structures/Client";
+import HandleMongo from './functions/MongoHandler';
 
-dotenv.config();
+export const client = new ExtendedClient();
+HandleMongo(process.env.Mongo);
 
-new StylarClient().init({
-    token: process.env.TOKEN
-});
+client.start();
