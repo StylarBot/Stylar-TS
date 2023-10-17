@@ -60,17 +60,17 @@ export default new Command({
             type: ApplicationCommandOptionType.Subcommand,
             options: [
                 {
+                    name: 'channel',
+                    description: 'The ticket channel!',
+                    type: ApplicationCommandOptionType.Channel,
+                    required: true
+                },
+                {
                     name: 'id',
                     description: 'The ID of the ticket!',
                     type: ApplicationCommandOptionType.String,
                     maxLength: 24,
                 },
-                {
-                    name: 'channel',
-                    description: 'The ticket channel!',
-                    type: ApplicationCommandOptionType.Channel,
-                    required: true
-                }
             ]
         },
         {

@@ -28,7 +28,7 @@ export default new Command({
             name: 'user',
             description: 'The user whos messages you want to clear!',
             type: ApplicationCommandOptionType.User,
-        }
+        },
     ],
 
     run: async({ interaction, guild, opts }) => {

@@ -42,7 +42,7 @@ export class ExtendedClient extends Client {
     reply(interaction: ExtendedInteraction, message: string) {
         interaction.reply({
             content: `${message}`
-        })
+        });
     };
 
     editreply(interaction: ExtendedInteraction, message: string) {

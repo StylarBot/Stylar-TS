@@ -55,11 +55,13 @@ export default new Command({
                     name: 'channel',
                     description: 'The channel you want to remove the emoji from!',
                     type: ApplicationCommandOptionType.Channel,
+                    required: true,
                 },
                 {
                     name: 'emoji',
                     description: 'The emoji that you want to remove!',
                     type: ApplicationCommandOptionType.String,
+                    required: true,
                 }
             ]
         },
@@ -72,6 +74,7 @@ export default new Command({
                     name: 'channel',
                     description: 'The channel you want to remove!',
                     type: ApplicationCommandOptionType.Channel,
+                    required: true,
                 }
             ]
         },

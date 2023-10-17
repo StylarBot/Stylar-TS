@@ -49,11 +49,11 @@ export default new Command({
                     name: 'botexception',
                     description: 'Do you want to still be able to add bots without them being banned?',
                     type: ApplicationCommandOptionType.String,
-                    required: true,
                     choices: [
                         { name: 'Enable Bot Exception', value: 'enablebotexception' },
                         { name: 'Disable Bot Exception', value: 'disablebotexception' }
-                    ]
+                    ],
+                    required: true,
                 },
             ]
         },
@@ -66,11 +66,11 @@ export default new Command({
                     name: 'punishment',
                     description: 'What do you want the punishment issued to new members be?',
                     type: ApplicationCommandOptionType.String,
-                    required: true,
                     choices: [
                         { name: 'Ban new members', value: 'ban' },
                         { name: 'Kick new members', value: 'kick' },
-                    ]
+                    ],
+                    required: true,
                 }
             ]
         }
