@@ -11,13 +11,13 @@ export default new Command({
     run: async({ interaction }) => {
         const { data } = await axios.get(`${info.gitAPIURL}/commits`);
         
-        return console.log(data);
+        const dater = data[0];
 
         git();
         const count = await git(`${info.gitRepo}`);
         const version = `v0.${count / 10}`;
 
-        const updatedate = new Date(data.commit.committer.date);
+        const updatedate = new Date(dater.commit.committer.date);
         const updatedms = updatedate.getTime();
         const updatedcms = Math.round(updatedms / 1000);
 
@@ -25,9 +25,9 @@ export default new Command({
             embeds: [
                 new EmbedBuilder()
                 .setTitle(`Stylar ${version}`)
-                .setDescription(`${data.commit.message}\n\nCommitted by: @[${data.commit.committer.name}](https://github.com/${data.commit.committer.name})`)
+                .setDescription(`${dater.commit.message}\n\nCommitted by: [@${dater.commit.committer.name}](https://github.com/${dater.commit.committer.name})\nCommitted on <t:${updatedcms}> (<t:${updatedcms}:R>)`)
                 .setColor('Blue')
-                .setFooter({ text: `Committed on <t:${updatedcms}> (<t:${updatedcms}:R>)` })
+                .setThumbnail(dater.committer.avatar_url)
             ]
         })
     }
