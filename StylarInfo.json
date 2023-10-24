@@ -1,5 +1,6 @@
 {
     "supportServer": "https://discord.gg/fxQJsPSh",
     "gitRepoURL": "https://github.com/StylarBot/Stylar-TS",
-    "gitRepo": "StylarBot/Stylar-TS"
+    "gitRepo": "StylarBot/Stylar-TS",
+    "gitAPIURL": "https://api.github.com/repos/StylarBot/Stylar-TS"
 }
