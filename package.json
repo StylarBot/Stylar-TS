@@ -11,22 +11,28 @@
     "nodemon": "nodemon src/index.ts"
   },
   "keywords": [],
-  "author": "benjis#5249",
+  "author": "benjisqt and leocodes.",
   "license": "MIT",
   "dependencies": {
     "@discordjs/opus": "^0.9.0",
     "@outwalk/discord-backup": "^0.5.8",
+    "@types/request-promise-native": "^1.0.20",
     "axios": "^1.5.1",
     "chalk": "^4.1.2",
     "discord-music-player": "^9.1.1",
     "discord.js": "^14.13.0",
     "dotenv": "^16.1.3",
+    "git-commit-count": "^1.1.3",
     "glob": "^7.2.3",
     "mongoose": "^7.2.2",
     "ms": "^2.1.3",
     "node-fetch": "^2.6.7",
+    "os": "^0.1.2",
     "reciple": "^7.7.4",
-    "reddit-fetch": "^1.5.1"
+    "reddit-fetch": "^1.5.1",
+    "request-promise-native": "^1.0.9",
+    "simple-git": "^3.20.0",
+    "socket.io": "^4.7.2"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
