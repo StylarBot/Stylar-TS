@@ -8,7 +8,7 @@ export default new Command({
     name: 'patch',
     description: 'Get the latest Stylar update!',
 
-    run: async({ interaction }) => {
+    run: async({ interaction, client }) => {
         const { data } = await axios.get(`${info.gitAPIURL}/commits`);
         
         const dater = data[0];
@@ -25,9 +25,9 @@ export default new Command({
             embeds: [
                 new EmbedBuilder()
                 .setTitle(`Stylar ${version}`)
-                .setDescription(`Stylar has updated! Here's what's new:\n\n${dater.commit.message}\n\nCommitted by: [@${dater.commit.committer.name}](https://github.com/${dater.commit.committer.name})\nCommitted on <t:${updatedcms}> (<t:${updatedcms}:R>)`)
+                .setDescription(`**Stylar has updated! Here's what's new:**\n${dater.commit.message}\n\n*Committed by [@${dater.commit.committer.name}](https://github.com/${dater.commit.committer.name}) on <t:${updatedcms}>*`)
                 .setColor('Blue')
-                .setThumbnail(dater.committer.avatar_url)
+                .setThumbnail(client.user.displayAvatarURL({ size: 1024 }))
             ]
         })
     }

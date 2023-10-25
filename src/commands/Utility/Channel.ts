@@ -5,6 +5,7 @@ import { ApplicationCommandOptionType } from "discord.js";
 export default new Command({
     name: 'channel',
     description: 'Channel management commands!',
+    userPermissions: ['ManageChannels'],
     options: [
         {
             name: 'text',

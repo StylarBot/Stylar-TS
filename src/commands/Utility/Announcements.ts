@@ -6,6 +6,7 @@ import axios from 'axios';
 export default new Command({
     name: 'announcements',
     description: 'Get notified of Stylar\'s status!',
+    userPermissions: ['ManageChannels'],
     options: [
         {
             name: 'setchannel',

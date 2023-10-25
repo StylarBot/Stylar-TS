@@ -7,6 +7,7 @@ import Reply from "../../functions/Reply";
 export default new Command({
     name: 'blacklist',
     description: 'Blacklist system in Stylar!',
+    userPermissions: ['ManageGuild'],
     options: [
         {
             name: 'command',
