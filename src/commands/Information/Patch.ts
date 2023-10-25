@@ -25,9 +25,11 @@ export default new Command({
             embeds: [
                 new EmbedBuilder()
                 .setTitle(`Stylar ${version}`)
-                .setDescription(`**Stylar has updated! Here's what's new:**\n${dater.commit.message}\n\n*Committed by [@${dater.commit.committer.name}](https://github.com/${dater.commit.committer.name}) on <t:${updatedcms}>*`)
+                .setDescription(`**Stylar has updated! Here's what's new:**\n${dater.commit.message}`)
                 .setColor('Blue')
                 .setThumbnail(client.user.displayAvatarURL({ size: 1024 }))
+                .setTimestamp(updatedms)
+                .setFooter({ text: `${dater.commit.committer.name}`, iconURL: `${dater.author.avatar_url}` })
             ]
         })
     }
