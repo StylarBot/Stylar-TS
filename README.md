@@ -1,4 +1,4 @@
-# Stylar-TS
+## Stylar-TS
 ⚙️ Stylar-TS is a more experimental and advanced version of Stylar, written completely in TypeScript!
 **Written by [@benjisqt](https://github.com/benjisqt) and [@leocodes.](https://github.com/heyitsleo)**
 
