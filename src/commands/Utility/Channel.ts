@@ -9,13 +9,17 @@ import {
     GuildChannel,
     ButtonStyle,
     ButtonBuilder,
-    ActionRowBuilder
+    ActionRowBuilder,
+    GuildTextBasedChannel,
+    EmbedBuilder
 } from "discord.js";
+import ms from 'ms';
 
 export default new Command({
     name: 'channel',
     description: 'Channel management commands!',
     userPermissions: ['ManageChannels'],
+    clientPermissions: ['ManageChannels', 'SendMessages'],
     options: [
         {
             name: 'voice',
@@ -137,6 +141,11 @@ export default new Command({
                     name: 'channel',
                     description: 'The channel you want to set the slowmode for!',
                     type: ApplicationCommandOptionType.Channel,
+                    channelTypes: [
+                        ChannelType.GuildText,
+                        ChannelType.PrivateThread,
+                        ChannelType.PublicThread
+                    ]
                 }
             ]
         }
@@ -282,6 +291,120 @@ export default new Command({
                         } else return;
                     });
                 });
+            }
+            break;
+
+            case 'purge': {
+                const validchannel = await guild.channels.cache.get(channel.id);
+                if(!validchannel) throw "That channel is not of type GuildText.";
+                if(validchannel.type !== ChannelType.GuildText) throw "That channel is not of type GuildText.";
+        
+                const messages = await validchannel.messages.fetch({
+                    limit: amount + 1,
+                });
+        
+                const button = new ButtonBuilder()
+                .setCustomId('delete')
+                .setStyle(ButtonStyle.Primary)
+                .setLabel('🗑️')
+        
+                const row = new ActionRowBuilder<ButtonBuilder>()
+                .addComponents(button)
+        
+                if(user) {
+                    let i = 0;
+                    const filtered = [];
+        
+                    await messages.filter((msg) => {
+                        if(msg.author.id === user.id && amount > i) {
+                            filtered.push(msg);
+                            i++;
+                        }
+                    });
+        
+                    await validchannel.bulkDelete(filtered).then(async messages => {
+                        const msg = await interaction.reply({
+                            content: `\`\`\`✅ Deleted ${messages.size} sent by ${user.tag}\`\`\``,
+                            ephemeral: false,
+                            components: [row]
+                        });
+        
+                        const collector = await msg.createMessageComponentCollector();
+        
+                        collector.on('collect', async(results) => {
+                            if(results.customId === 'delete') {
+                                await msg.delete();
+                            } else return;
+                        });
+                    });
+                } else {
+                    await validchannel.bulkDelete(amount, true).then(async messages => {
+                        const msg = await interaction.reply({
+                            content: `\`\`\`✅ Deleted ${messages.size} from ${channel.name}\`\`\``,
+                            ephemeral: false,
+                            components: [row]
+                        });
+        
+                        const collector = await msg.createMessageComponentCollector();
+        
+                        collector.on('collect', async(results) => {
+                            if(results.customId === 'delete') {
+                                await msg.delete();
+                            } else return;
+                        });
+                    });
+                }
+            }
+            break;
+
+            case 'slowmode': {
+                const id = channel.id;
+
+                const msduration = ms(duration);
+                const ch = interaction.guild.channels.cache.get(id) as GuildTextBasedChannel;
+
+                if(!ch.permissionsFor(client.user).has('ManageChannels')) throw "That channel does not grant me permissions to edit its properties.";
+
+                if (!ch) return Reply(interaction, 'That channel is not in this guild.', '❗️', true);
+
+                if (msduration > 21600000 || parseInt(duration) < 0) return Reply(interaction, `The slowmode cannot be negative or over 6 hours.`, `❗️`, true);
+                if (msduration > 0) {
+                    await ch.setRateLimitPerUser(msduration / 1000);
+
+                    Reply(interaction, `Successfully set slowmode in ${ch} to ${duration}`, `✅`, true);
+
+                    return ch.send({
+                        embeds: [
+                            new EmbedBuilder()
+                            .setTitle(`Channel - Slowmode Updated`)
+                            .setDescription(`The slowmode in this channel has been updated.`)
+                            .setColor('Blue')
+                            .setFields(
+                                { name: 'Moderator', value: `${interaction.member}` },
+                                { name: `Slowmode`, value: `${duration}` }
+                            )
+                            .setThumbnail(guild.iconURL({ size: 1024 }))
+                        ]
+                    });
+                } else {
+                    await ch.setRateLimitPerUser(null);
+
+                    Reply(interaction, `Successfully disabled slowmode in ${ch}`, `✅`, true);
+
+                    return ch.send({
+                        embeds: [
+                            new EmbedBuilder()
+                            .setTitle(`Channel - Slowmode Reset`)
+                            .setDescription(`The slowmode in this channel has been reset.`)
+                            .setColor('Blue')
+                            .setFields(
+                                { name: 'Moderator', value: `${interaction.member}` },
+                                { name: `Slowmode`, value: `None` }
+                            )
+                            .setThumbnail(guild.iconURL({ size: 1024 }))
+                        ]
+                    });
+                }
             }
             break;
         }
