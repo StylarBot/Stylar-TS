@@ -57,7 +57,7 @@ export default new Command({
             description: 'Warn a user!',
             type: ApplicationCommandOptionType.Subcommand,
             options: [
-                { // aww :)
+                {
                     name: 'user',
                     description: 'The user you want to warn!',
                     required: true,
