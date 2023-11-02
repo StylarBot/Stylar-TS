@@ -60,16 +60,11 @@ export default new Command({
             type: ApplicationCommandOptionType.Subcommand,
             options: [
                 {
-                    name: 'channel',
-                    description: 'The ticket channel!',
-                    type: ApplicationCommandOptionType.Channel,
-                    required: true
-                },
-                {
                     name: 'id',
                     description: 'The ID of the ticket!',
                     type: ApplicationCommandOptionType.String,
                     maxLength: 24,
+                    required: true,
                 },
             ]
         },
@@ -110,17 +105,17 @@ export default new Command({
             type: ApplicationCommandOptionType.Subcommand,
             options: [
                 {
-                    name: 'user',
-                    description: 'The user whos access you want to change!',
-                    type: ApplicationCommandOptionType.User,
-                    required: true,
-                },
-                {
                     name: 'id',
                     description: 'The ID of the ticket!',
                     type: ApplicationCommandOptionType.String,
                     maxLength: 24,
-                    required: true 
+                    required: true
+                },
+                {
+                    name: 'user',
+                    description: 'The user whos access you want to change!',
+                    type: ApplicationCommandOptionType.User,
+                    required: true,
                 }
             ]
         }
@@ -338,7 +333,7 @@ export default new Command({
                     throw "That channel was not found. Ticket closing automatically.";
                 }
 
-                validticket.Active === false;
+                validticket.Active = false;
                 validticket.save();
                 await channel.delete();
 
@@ -491,16 +486,16 @@ export default new Command({
             break;
 
             case 'access': {
-                const ticketchannel = await ticket.findOne({ Guild: guild.id, Channel: interaction.channelId });
-                if(!ticketchannel && !id) throw "That channel does not have a valid ticket in it!";
+                const validticket = await ticket.findById(id);
+                if(!validticket) throw "That ticket either doesn't exist or has been closed.";
 
                 const member = await guild.members.cache.get(user.id);
                 if(!member) throw "That member is not in this server.";
 
-                const channel = await guild.channels.cache.get(ticketchannel.Channel);
+                const channel = await guild.channels.cache.get(validticket.Channel);
                 if(!channel) {
                     reply(interaction, `Channel does not exist, deleting ticket automatically.`, `🚫`, true);
-                    return ticketchannel.deleteOne();
+                    return validticket.deleteOne();
                 }
                 if(channel.type !== ChannelType.GuildText) throw "That channel is not of type GuildText";
 
@@ -523,7 +518,7 @@ export default new Command({
 
                 let status;
 
-                if(ticketchannel.AllUsers.includes(member.id)) status = 'Yes';
+                if(validticket.AllUsers.includes(member.id)) status = 'Yes';
                 else status = 'No';
 
                 const msg = await interaction.reply({
@@ -557,9 +552,9 @@ export default new Command({
                             return;
                         }
                         else {
-                            await ticketchannel.AllUsers.push(member.id);
-                            await ticketchannel.Contributors.push(member.id);
-                            ticketchannel.save();
+                            await validticket.AllUsers.push(member.id);
+                            await validticket.Contributors.push(member.id);
+                            validticket.save();
 
                             channel.permissionOverwrites.edit(member.id, {
                                 ViewChannel: true,
@@ -593,11 +588,11 @@ export default new Command({
                             return;
                         }
                         else {
-                            const indexofAllUsers = ticketchannel.AllUsers.indexOf(member.id);
-                            const indexofContributors = ticketchannel.Contributors.indexOf(member.id);
-                            await ticketchannel.AllUsers.splice(indexofAllUsers, 1);
-                            await ticketchannel.Contributors.splice(indexofContributors, 1);
-                            ticketchannel.save();
+                            const indexofAllUsers = validticket.AllUsers.indexOf(member.id);
+                            const indexofContributors = validticket.Contributors.indexOf(member.id);
+                            await validticket.AllUsers.splice(indexofAllUsers, 1);
+                            await validticket.Contributors.splice(indexofContributors, 1);
+                            validticket.save();
 
                             channel.permissionOverwrites.edit(member.id, {
                                 ViewChannel: false,

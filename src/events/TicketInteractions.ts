@@ -153,7 +153,7 @@ export default new Event("interactionCreate", async(interaction) => {
         });
         const validticket = await ticket.findOne({ Guild: interaction.guildId, Channel: `${interaction.channelId}` });
         if(!validticket) {
-            interaction.reply({ content: `This ticket doesn't exist. Closing channel.` });
+            interaction.reply({ content: `This ticket doesn't exist. Closing channel in 15 seconds.` });
 
             setTimeout(() => {
                 interaction.channel.delete();
@@ -170,7 +170,7 @@ export default new Event("interactionCreate", async(interaction) => {
                 .setTitle(`Ticket Successfully Closed`)
                 .setDescription(`This ticket has successfully been closed.\nClosed by: ${interaction.user}.`)
                 .setColor('Blue')
-            ]
+            ],
         });
     }
 });

@@ -1,5 +1,4 @@
 import {
-    ApplicationCommandOptionType,
     EmbedBuilder,
     ButtonBuilder,
     ButtonStyle,
@@ -26,7 +25,7 @@ export default new Command({
         .setCustomId('deny')
         .setEmoji('❎')
         .setLabel('Deny')
-        .setStyle(ButtonStyle.Success)
+        .setStyle(ButtonStyle.Danger)
 
         const row = new ActionRowBuilder<ButtonBuilder>()
         .setComponents(accept, deny)
@@ -40,7 +39,7 @@ export default new Command({
                 .setTimestamp()
                 .setColor('#7fdf67')
                 .setThumbnail('https://i.imgur.com/r1Vg9ng.png')
-            ], components: [row], ephemeral: true
+            ], components: [row]
         });
 
         const collector = await msg.createMessageComponentCollector({ time: 30000 });
@@ -56,19 +55,48 @@ export default new Command({
             }
 
             if(results.customId === 'accept') {
-                const antijoinsetup = new ButtonBuilder()
-                .setCustomId('antijoinsetup')
-                .setLabel('Setup Antijoin')
-                .setStyle(ButtonStyle.Primary)
+                const ajexists = await Antijoin.findOne({ Guild: guild.id });
+                const arexists = await Autoreact.findOne({ Guild: guild.id });
+
+                let arsetup;
+                let antijoinsetup;
+
+                if(ajexists) {
+                    antijoinsetup = new ButtonBuilder()
+                    .setCustomId('antijoinsetup')
+                    .setLabel('Antijoin')
+                    .setEmoji('❌')
+                    .setStyle(ButtonStyle.Success)
+                } else {
+                    antijoinsetup = new ButtonBuilder()
+                    .setCustomId('antijoinsetup')
+                    .setLabel('Antijoin')
+                    .setEmoji('❌')
+                    .setStyle(ButtonStyle.Danger)
+                }
+
+                if(arexists) {
+                    arsetup = new ButtonBuilder()
+                    .setCustomId('arsetup')
+                    .setEmoji('🌟')
+                    .setLabel('Autoreactions')
+                    .setStyle(ButtonStyle.Success)
+                } else {
+                    arsetup = new ButtonBuilder()
+                    .setCustomId('arsetup')
+                    .setEmoji('🌟')
+                    .setLabel('Autoreactions')
+                    .setStyle(ButtonStyle.Danger)
+                }
 
                 const setuprow = new ActionRowBuilder<ButtonBuilder>()
-                .setComponents(antijoinsetup)
+                .setComponents(antijoinsetup, arsetup)
 
                 const me = await msg.edit({
                     embeds: [
                         new EmbedBuilder()
                         .setTitle(`Welcome to Stylar:tm:`)
-                        .setDescription(`Welcome to a new world of customisability, with Stylar.\n\n**✅ You have accepted our TOS and Privacy Policy.**\n\nAs you select and setup the individual categories, make sure you fill out using valid \`#channels\` and \`@roles\`!\n\nSelect a button from below and have fun customising your Discord server like no other with Stylar:tm:!`)
+                        .setDescription(`Welcome to a new world of customisability, with Stylar.\n**Red: Not setup\nGreen: Setup**\nAs you select and setup the individual categories, make sure you fill out using valid \`#channels\` and \`@roles\`!\n\nSelect a button from below and have fun customising your Discord server like no other with Stylar:tm:!`)
                         .setFooter({ text: `Stylar Setup` })
                         .setTimestamp()
                         .setColor('#7fdf67')
@@ -93,8 +121,15 @@ export default new Command({
                         .setEmoji('❎')
                         .setStyle(ButtonStyle.Success)
 
-                        const ajrow = new ActionRowBuilder<ButtonBuilder>()
-                        .setComponents(enableaj, disableaj)
+                        let ajrow;
+
+                        if(ajexists) {
+                            ajrow = new ActionRowBuilder<ButtonBuilder>()
+                            .setComponents(disableaj)
+                        } else {
+                            ajrow = new ActionRowBuilder<ButtonBuilder>()
+                            .setComponents(enableaj)
+                        }
 
                         const editmsg = await me.edit({
                             embeds: [
@@ -113,15 +148,6 @@ export default new Command({
                         collector.on('collect', async(results) => {
                             const aj = await Antijoin.findOne({ Guild: guild.id });
                             if(results.customId === 'enableaj') {
-                                if(aj) {
-                                    editmsg.reply({
-                                        content: `The antijoin system is already enabled!`,
-                                        embeds: [],
-                                        components: []
-                                    });
-                                    return;
-                                }
-
                                 const banbutton = new ButtonBuilder()
                                 .setCustomId('ajban')
                                 .setLabel('Ban New Users')
@@ -338,6 +364,28 @@ export default new Command({
                                 return;
                             }
                         });
+                    } else if (results.customId === 'arsetup') {
+                        const enablear = new ButtonBuilder()
+                        .setCustomId('enablear')
+                        .setLabel('Enable Anti-Join')
+                        .setEmoji('✅')
+                        .setStyle(ButtonStyle.Success)
+
+                        const disablear = new ButtonBuilder()
+                        .setCustomId('disableaj')
+                        .setLabel('Disable Anti-Join')
+                        .setEmoji('❎')
+                        .setStyle(ButtonStyle.Success)
+
+                        let ajrow;
+
+                        if(ajexists) {
+                            ajrow = new ActionRowBuilder<ButtonBuilder>()
+                            .setComponents(disablear)
+                        } else {
+                            ajrow = new ActionRowBuilder<ButtonBuilder>()
+                            .setComponents(enablear)
+                        }
                     }
                 });
             } else if (results.customId === 'deny') {
