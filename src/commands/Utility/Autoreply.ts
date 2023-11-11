@@ -47,6 +47,11 @@ export default new Command({
             name: 'removeall',
             description: 'Remove all autoreplies in the server!',
             type: ApplicationCommandOptionType.Subcommand
+        },
+        {
+            name: 'view',
+            description: 'View all autoreplies in the server!',
+            type: ApplicationCommandOptionType.Subcommand,
         }
     ],
 
@@ -190,6 +195,27 @@ export default new Command({
                         });
                         return;
                     })
+            }
+            break;
+
+            case 'view': {
+                let autos = [];
+                const allars = await autoreply.find({ Guild: guild.id });
+                if(!allars || allars.length <= 0) throw "There are no autoreplies in this server!";
+
+                allars.forEach((ar) => {
+                    autos.push(`Phrase (Trigger): ${ar.Phrase}\nReply: ${ar.Reply}`);
+                });
+
+                return interaction.reply({
+                    embeds: [
+                        new EmbedBuilder()
+                        .setTitle(`All Autoreplies`)
+                        .setDescription(`Below are all of the autoreplies set up in this server.\n\n${autos.join('\n\n')}`)
+                        .setColor('Blue')
+                        .setImage(guild.iconURL({ size: 1024 }))
+                    ]
+                })
             }
             break;
         }
