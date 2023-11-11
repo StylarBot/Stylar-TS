@@ -8,7 +8,7 @@ export default new Event("messageCreate", async (message) => {
         if (!autoreplies || autoreplies.length <= 0) return;
 
         for (const ar of autoreplies) {
-            if (message.content.includes(ar.Phrase)) {
+            if (message.content.toLowerCase() === ar.Phrase) {
                 await message.reply({ content: `${ar.Reply}` });
             }
         }
