@@ -16,8 +16,8 @@ export default new Command({
                 .setDescription(`Version:\n\`\`\`${info.Version}\`\`\``)
                 .setFields(
                     { name: 'Creation', value: `<t:${Math.round(info.CreationMS / 1000)}> (<t:${Math.round(info.CreationMS / 1000)}:R>)`, inline: true },
-                    { name: '', value: ``, inline: true },
-                    { name: '', value: ``, inline: true },
+                    { name: 'Latest Commit Message', value: `${info.LatestCommit.Message}`, inline: true },
+                    { name: 'Latest Push', value: `<t:${Math.round(info.LatestCommit.PushedMS / 1000)}> (<t:${Math.round(info.LatestCommit.PushedMS / 1000)}:R>)`, inline: true },
                 )
                 .setColor('Blue')
                 .setThumbnail(client.user.displayAvatarURL({ size: 1024 }))
