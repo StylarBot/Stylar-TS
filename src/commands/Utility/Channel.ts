@@ -302,6 +302,8 @@ export default new Command({
                 const messages = await validchannel.messages.fetch({
                     limit: amount + 1,
                 });
+
+                if(amount > 100) throw "You cannot delete more than 100 messages at one time.";
         
                 const button = new ButtonBuilder()
                 .setCustomId('delete')

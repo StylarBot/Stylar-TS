@@ -92,7 +92,7 @@ export default new Command({
                 const setuprow = new ActionRowBuilder<ButtonBuilder>()
                 .setComponents(antijoinsetup, arsetup)
 
-                const me = await msg.edit({
+                const me = await results.update({
                     embeds: [
                         new EmbedBuilder()
                         .setTitle(`Welcome to Stylar:tm:`)
@@ -131,7 +131,7 @@ export default new Command({
                             .setComponents(enableaj)
                         }
 
-                        const editmsg = await me.edit({
+                        const editmsg = await results.update({
                             embeds: [
                                 new EmbedBuilder()
                                 .setTitle(`Welcome to Stylar:tm:`)
@@ -163,7 +163,7 @@ export default new Command({
                                 const ajpunishmentrow = new ActionRowBuilder<ButtonBuilder>()
                                 .setComponents(banbutton, kickbutton)
 
-                                const editmsg1 = await editmsg.edit({
+                                const editmsg1 = await results.update({
                                     embeds: [
                                         new EmbedBuilder()
                                         .setTitle(`Welcome to Stylar:tm:`)
@@ -194,7 +194,7 @@ export default new Command({
                                         const ajberow = new ActionRowBuilder<ButtonBuilder>()
                                         .setComponents(y, n)
 
-                                        const msg = await editmsg.edit({
+                                        const msg = await results.update({
                                             embeds: [
                                                 new EmbedBuilder()
                                                 .setTitle(`Welcome to Stylar:tm:`)
@@ -216,7 +216,7 @@ export default new Command({
                                                     Punishment: 'Ban'
                                                 });
 
-                                                await msg.edit({
+                                                await results.update({
                                                     embeds: [
                                                         new EmbedBuilder()
                                                         .setTitle(`Welcome to Stylar:tm:`)
@@ -239,7 +239,7 @@ export default new Command({
                                                     Punishment: 'Ban'
                                                 });
 
-                                                await msg.edit({
+                                                await results.update({
                                                     embeds: [
                                                         new EmbedBuilder()
                                                         .setTitle(`Welcome to Stylar:tm:`)
@@ -340,7 +340,7 @@ export default new Command({
                                 });
                             } else if (results.customId === 'disableaj') {
                                 if(!aj) {
-                                    editmsg.reply({
+                                    results.update({
                                         content: `The antijoin system is already disabled!`,
                                         embeds: [],
                                         components: []
@@ -350,7 +350,7 @@ export default new Command({
 
                                 await aj.deleteOne();
 
-                                await editmsg.edit({
+                                await results.update({
                                     embeds: [
                                         new EmbedBuilder()
                                         .setTitle(`Welcome to Stylar:tm:`)

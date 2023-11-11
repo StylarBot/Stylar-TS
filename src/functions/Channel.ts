@@ -109,7 +109,7 @@ async function Lock(channel: GuildChannel, client: Client, member: GuildMember, 
                 Speak: false,
                 Connect: false,
             });
-    
+
             return true;
         } catch (err) {
             return err;
@@ -123,7 +123,7 @@ async function Lock(channel: GuildChannel, client: Client, member: GuildMember, 
                 AddReactions: true,
                 UseExternalEmojis: true,
             });
-    
+
             return true;
         } catch (err) {
             return err;
@@ -164,7 +164,7 @@ async function Lockdown(client: Client, member: GuildMember, guild: Guild, role:
             ch.permissionsFor(role).remove('EmbedLinks');
             ch.permissionsFor(role).remove('AttachFiles');
         });
-    
+
         return true;
     } catch (err) {
         return err;
@@ -187,7 +187,7 @@ async function LiftLockdown(client: Client, member: GuildMember, guild: Guild, r
             ch.permissionsFor(role).add('EmbedLinks');
             ch.permissionsFor(role).add('AttachFiles');
         });
-    
+
         return true;
     } catch (err) {
         return err;

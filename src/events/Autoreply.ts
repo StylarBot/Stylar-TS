@@ -2,6 +2,7 @@ import { Event } from "../structures/Event";
 import autoreply from "../models/Autoreply";
 
 export default new Event("messageCreate", async (message) => {
+    if(message.author.bot) return;
     try {
         const autoreplies = await autoreply.find({ Guild: message.guild.id });
         if (!autoreplies || autoreplies.length <= 0) return;
