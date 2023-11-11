@@ -136,13 +136,11 @@ export default new Command({
                 const collector = await msg.createMessageComponentCollector({ time: 30000 });
 
                 collector.on('collect', async(results) => {
-                    collector.on('collect', async(results) => {
                         if(results.user.id !== interaction.user.id) {
                             results.reply({ content: `This is not your prompt!`, ephemeral: true });
                             return;
                         }
                         if(results.customId === 'confirm') {
-                            await interaction.deferReply();
                             let phrases = [];
                             let replies = [];
     
@@ -153,7 +151,7 @@ export default new Command({
     
                             await autoreply.deleteMany({ Guild: guild.id });
     
-                            msg.edit({
+                            results.update({
                                 embeds: [
                                     new EmbedBuilder()
                                     .setTitle(`✅ All autoreplies removed`)
@@ -169,7 +167,7 @@ export default new Command({
                             });
                             return;
                         } else if (results.customId === 'abort') {
-                            msg.edit({
+                            results.update({
                                 embeds: [
                                     new EmbedBuilder()
                                     .setTitle(`❌ Operation Aborted`)
@@ -192,7 +190,6 @@ export default new Command({
                         });
                         return;
                     })
-                });
             }
             break;
         }

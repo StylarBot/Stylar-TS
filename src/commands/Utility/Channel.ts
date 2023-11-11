@@ -277,7 +277,7 @@ export default new Command({
     
                 await ch.clone().then(async (chan) => {
                     const msg = await chan.send({
-                        content: `\`\`\`${channel.name} has been cleared all of all of its messages.\`\`\``,
+                        content: `\`\`\`${channel.name} has been cleared of all of its messages.\`\`\``,
                         components: [row]
                     });
     
