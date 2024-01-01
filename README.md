@@ -1,19 +1,10 @@
-# Stylar-TS
-⚙️ Stylar-TS is a more experimental and advanced version of Stylar, written completely in TypeScript!<br>
-**Written by [@benjisqt](https://github.com/benjisqt) and [@leocodes.](https://github.com/heyitsleo)**
-
 <div align="center">
 
-<a href="https://www.typescriptlang.org/"><img alt="Typescript" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3.1.2/assets/cozy/built-with/typescript_vector.svg"></a>
+<img src="https://i.imgur.com/4LW9K0H.png" alt="StylarLogo" width="224" height="224" style="margin-bottom: 25px;" />
 
-## What our Commits mean: 
+# Stylar has ended services!
 
-**Stylar Commit Format:**
+🛑 Notice: Starting Jan 1st, 2024; Stylar 1.0 will be terminating any further updates throughout the bots "Stylar#4154" and affiliates. 
+**Stylar Developers will not be stopping developing all together, they'll work on a new project.** Visit https://github.com/FortressBot
+for a new, handy, and open-source Discord bot. Fortress will recieve all further attention towards the project. Thank you.
 
-⚙️ - Change<br>
-🔧 - Fix/Update<br>
-🚀 - New Feature/Fully Stable<br>
-🚧 - Beta Feature/Unstable</br>
-
-**Short Description:**<br>
-(emoji) (pick 1: change:, fix/update:, new feature:, beta feature: (with the ":" included) and paste) (short list of change)</br>
