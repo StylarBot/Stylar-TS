@@ -43,6 +43,10 @@ export default new Event("interactionCreate", async (interaction) => {
                 guild: interaction.guild as ExtendedGuild,
                 interaction: interaction as ExtendedInteraction
             });
+
+            return interaction.channel.send({
+                content: `:warning: **Stylar will be terminating in a couple of days.**\nFor more information, check out the Stylar GitHub page for our future projects:\nhttps://github.com/StylarBot`
+            });
         } catch (err) {
             console.log(err);
             return interaction.reply({
